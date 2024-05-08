@@ -34,6 +34,15 @@ func main() {
 	user.Route(engine)
 	authorized := engine.Group("/", authentication.Authentication)
 	user.AuthenticationRoute(authorized)
+	routeStatic(engine)
+	addr := fmt.Sprintf(":%d", config.C.GetInt(constant.ServerPort))
+	logger.L.Infof("Listening and serving HTTP on : %s", addr)
+	if err := engine.Run(addr); err != nil {
+		logger.L.Fatalf("Fatal error golite: %v\n", err)
+	}
+}
+
+func routeStatic(engine *gin.Engine) {
 	engine.Static("/assets", config.C.GetString(constant.AssetsRootDir))
 	engine.Static("/js", config.C.GetString(constant.AssetsJsDir))
 	engine.Static("/css", config.C.GetString(constant.AssetsCssDir))
@@ -41,9 +50,4 @@ func main() {
 	engine.GET("/", func(c *gin.Context) {
 		c.Redirect(http.StatusFound, "/assets")
 	})
-	addr := fmt.Sprintf(":%d", config.C.GetInt(constant.ServerPort))
-	logger.L.Infof("Listening and serving HTTP on : %s", addr)
-	if err := engine.Run(addr); err != nil {
-		logger.L.Fatalf("Fatal error golite-api: %v\n", err)
-	}
 }
