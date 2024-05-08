@@ -3,7 +3,7 @@ package user
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
-	"golite/constant"
+	"golite/internal/constant"
 	"golite/internal/util"
 	"golite/model/user"
 	userService "golite/service/user"

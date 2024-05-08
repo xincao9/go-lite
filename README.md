@@ -1,2 +1,2 @@
-# golite
+# go-lite
 
