@@ -20,19 +20,19 @@ type projectInfo struct {
 }
 
 func main() {
-	project := flag.String("project", "demo", "项目名字")
+	project := flag.String("p", "demo", "Project Name")
 	if flag.Parsed() == false {
 		flag.Parse()
 	}
 	err := copy(*project)
 	if err != nil {
 		_ = os.RemoveAll(*project)
-		log.Fatalf("copy %v", err)
+		log.Fatalf("internal %v", err)
 	}
 	err = render(*project, &projectInfo{Project: *project})
 	if err != nil {
 		_ = os.RemoveAll(*project)
-		log.Fatalf("render %v", err)
+		log.Fatalf("internal %v", err)
 	}
 }
 
